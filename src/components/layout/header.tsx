@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { ThemeToggle } from '@/components/shared/theme-toggle';
 
 const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -54,13 +55,17 @@ export function Header() {
           })}
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="btn btn-icon preset-tonal-surface md:hidden ml-auto"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <Menu className="h-5 w-5" />
-        </button>
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle />
+
+          {/* Mobile Menu Button */}
+          <button
+            className="btn btn-icon preset-tonal-surface md:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}

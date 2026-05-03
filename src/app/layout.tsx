@@ -39,6 +39,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const themeBootScript = `(function(){try{var t=localStorage.getItem('pet-theme')||'dark';var d=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,7 +51,11 @@ export default function RootLayout({
       lang="en"
       data-theme="nosh"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
       </body>
