@@ -10,7 +10,6 @@ import {
   Settings,
   Menu,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -27,10 +26,10 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-surface-200-800 bg-surface-50-950/95 backdrop-blur">
+      <div className="container flex h-14 max-w-screen-2xl items-center px-4">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <DollarSign className="h-6 w-6 text-primary" />
+          <DollarSign className="h-6 w-6 text-primary-500" />
           <span className="hidden font-bold sm:inline-block">PET</span>
         </Link>
 
@@ -44,8 +43,8 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-2 transition-colors hover:text-foreground/80',
-                  isActive ? 'text-foreground' : 'text-foreground/60'
+                  'flex items-center gap-2 transition-colors hover:text-surface-950-50',
+                  isActive ? 'text-primary-500' : 'text-surface-600-400'
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -56,20 +55,18 @@ export function Header() {
         </nav>
 
         {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden ml-auto"
+        <button
+          className="btn btn-icon preset-tonal-surface md:hidden ml-auto"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           <Menu className="h-5 w-5" />
-        </Button>
+        </button>
       </div>
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="md:hidden border-t border-border/40 p-4">
-          <div className="flex flex-col gap-3">
+        <nav className="md:hidden border-t border-surface-200-800 p-4">
+          <div className="flex flex-col gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -79,10 +76,10 @@ export function Header() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    'flex items-center gap-3 p-2 rounded-md transition-colors',
+                    'flex items-center gap-3 p-3 rounded-container transition-colors',
                     isActive
-                      ? 'bg-accent text-foreground'
-                      : 'text-foreground/60 hover:bg-accent/50 hover:text-foreground/80'
+                      ? 'preset-filled-primary-500'
+                      : 'hover:preset-tonal-surface'
                   )}
                 >
                   <Icon className="h-5 w-5" />

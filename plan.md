@@ -6,15 +6,17 @@ A personal expense tracking web application built with Next.js, designed to help
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4
-- **UI Components**: Shadcn UI
+- **UI Components**: Skeleton UI (@skeletonlabs/skeleton-react)
+- **Theme**: Nosh (dark mode default)
 - **Forms**: React Hook Form + Zod
 - **Date Handling**: date-fns
 - **Icons**: Lucide React
 - **Storage**: Local Storage (browser)
 - **Deployment**: Vercel
+- **Package Manager**: pnpm
 
 ## Core Features
 
@@ -180,22 +182,25 @@ src/
 ## Implementation Phases
 
 ### Phase 1: Foundation
-- [x] Project setup (Next.js, Tailwind, Shadcn)
-- [ ] Type definitions
-- [ ] Local storage utilities
-- [ ] Basic layout (header, navigation)
-- [ ] Theme toggle (dark mode default)
+- [x] Project setup (Next.js, Tailwind, Skeleton UI)
+- [x] Type definitions (src/types/index.ts)
+- [x] Local storage utilities (src/lib/storage.ts)
+- [x] Data encoding utilities (src/lib/data-encoding.ts)
+- [x] Calculation utilities (src/lib/calculations.ts)
+- [x] Basic layout (header with navigation)
+- [x] Dashboard with balance overview & weekly breakdown
+- [ ] Theme toggle (dark mode default, light mode available)
 
 ### Phase 2: Core Data Management
-- [ ] Category management (CRUD + defaults)
-- [ ] Expense management (add, edit, delete)
-- [ ] Income management (add, edit, delete)
-- [ ] Local storage persistence
+- [x] Default categories configured
+- [ ] Expense management page (add, edit, delete)
+- [ ] Income management page (add, edit, delete)
+- [x] Local storage persistence via useAppData hook
 
 ### Phase 3: Dashboard & Views
-- [ ] Dashboard with balance overview
-- [ ] Monthly expense view
-- [ ] Weekly breakdown component
+- [x] Dashboard with balance overview
+- [x] Weekly breakdown component
+- [ ] Monthly expense view (calendar-style)
 - [ ] Recent transactions list
 
 ### Phase 4: Projections
@@ -253,23 +258,30 @@ Import flow:
 
 ```bash
 # Development
-npm run dev
+pnpm dev
 
 # Build
-npm run build
+pnpm build
 
 # Lint
-npm run lint
+pnpm lint
 
 # Type check
-npx tsc --noEmit
+pnpm exec tsc --noEmit
 ```
 
 ## Session Notes
 
 ### Session 1 (Initial Setup)
-- Created Next.js project with TypeScript, Tailwind CSS v4
-- Initialized Shadcn UI with essential components
-- Installed dependencies: react-hook-form, zod, date-fns, lucide-react
+- Created Next.js 16 project with TypeScript, Tailwind CSS v4
+- Initially set up Shadcn UI, then switched to Skeleton UI per user preference
+- Using Skeleton UI with "nosh" theme (dark mode default)
+- Installed dependencies: react-hook-form, zod, date-fns, lucide-react, clsx
+- Set up complete type definitions and data models
+- Created storage utilities with default categories
+- Created calculation utilities for balance and projections
+- Created data encoding utilities for shareable links
+- Built dashboard page with summary cards and weekly breakdown
+- Built responsive header with navigation
 - Created this plan document
-- Next steps: Set up types and project structure
+- **Next steps**: Build expenses page, income page, projections page
