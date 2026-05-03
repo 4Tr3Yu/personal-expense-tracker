@@ -1,6 +1,7 @@
 'use client';
 
 import { Header } from '@/components/layout/header';
+import { BottomNav } from '@/components/layout/bottom-nav';
 import { useAppData } from '@/hooks/use-app-data';
 import { calculateMonthlyBalance, formatCurrency, getWeeklyBreakdown } from '@/lib/calculations';
 import { ArrowDownIcon, ArrowUpIcon, WalletIcon, TrendingUp } from 'lucide-react';
@@ -13,7 +14,7 @@ export default function Dashboard() {
     return (
       <div className="flex min-h-screen flex-col">
         <Header />
-        <main className="flex-1 container py-6 px-4">
+        <main className="flex-1 container py-6 px-4 pb-24">
           <div className="animate-pulse space-y-4">
             <div className="h-8 bg-surface-200-800 rounded w-48" />
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -23,6 +24,7 @@ export default function Dashboard() {
             </div>
           </div>
         </main>
+        <BottomNav />
       </div>
     );
   }
@@ -164,6 +166,7 @@ export default function Dashboard() {
           )}
         </div>
       </main>
+      <BottomNav />
     </div>
   );
 }

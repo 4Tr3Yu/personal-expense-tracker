@@ -11,3 +11,8 @@ html, body {
 body {
   @apply preset-filled-surface-50-950;
 }
+
+/* Safe area for iPhone X+ bottom nav */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
