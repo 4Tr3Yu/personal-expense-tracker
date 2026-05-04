@@ -78,8 +78,9 @@ export function DataShare({ data }: Props) {
             onClick={copy}
             className="btn preset-filled-primary-500 shrink-0"
             disabled={!url}
+            aria-label={copied ? 'Copied to clipboard' : 'Copy shareable link'}
           >
-            <Copy className="h-4 w-4" />
+            <Copy className="h-4 w-4" aria-hidden="true" />
             <span className="hidden sm:inline">
               {copied ? 'Copied!' : 'Copy'}
             </span>
@@ -87,6 +88,9 @@ export function DataShare({ data }: Props) {
         </div>
         <p className="text-xs text-surface-600-400">
           Anyone with this link can import your data. Keep it private.
+        </p>
+        <p role="status" aria-live="polite" className="sr-only">
+          {copied ? 'Link copied to clipboard' : ''}
         </p>
       </div>
 

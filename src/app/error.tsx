@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';
 
 export default function ErrorBoundary({
@@ -34,9 +35,9 @@ export default function ErrorBoundary({
         >
           Try again
         </button>
-        <a href="/" className="btn preset-tonal-surface">
+        <Link href="/" className="btn preset-tonal-surface">
           Go home
-        </a>
+        </Link>
       </div>
     </div>
   );

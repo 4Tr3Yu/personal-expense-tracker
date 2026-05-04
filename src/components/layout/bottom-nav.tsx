@@ -23,7 +23,10 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-surface-200-800 bg-surface-50-950/95 backdrop-blur safe-area-bottom">
+    <nav
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-surface-200-800 bg-surface-50-950/95 backdrop-blur safe-area-bottom"
+      aria-label="Mobile primary"
+    >
       <div className="flex items-center justify-around h-16 px-2">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -34,10 +37,11 @@ export function BottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-label={item.label}
                 className="flex flex-col items-center justify-center -mt-6"
               >
                 <div className="btn btn-icon preset-filled-primary-500 h-14 w-14 rounded-full shadow-lg">
-                  <Icon className="h-7 w-7" />
+                  <Icon className="h-7 w-7" aria-hidden="true" />
                 </div>
               </Link>
             );
@@ -47,14 +51,15 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={isActive ? 'page' : undefined}
               className={cn(
                 'flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-colors min-w-[64px]',
                 isActive
                   ? 'text-primary-500'
-                  : 'text-surface-600-400 hover:text-surface-950-50'
+                  : 'text-surface-600-400 hover:text-surface-950-50',
               )}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className="h-5 w-5" aria-hidden="true" />
               <span className="text-xs font-medium">{item.label}</span>
             </Link>
           );
