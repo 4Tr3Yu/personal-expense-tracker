@@ -1,12 +1,10 @@
 import {
   startOfMonth,
   endOfMonth,
-  startOfWeek,
   endOfWeek,
   isWithinInterval,
   format,
   addMonths,
-  getWeek,
   eachWeekOfInterval,
 } from 'date-fns';
 import { Expense, Income, MonthlyBalance, WeeklyBreakdown } from '@/types';

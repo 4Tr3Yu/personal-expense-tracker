@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useEffect } from 'react';
@@ -35,9 +35,9 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 
 export function ExpenseForm({ categories, initial, onSubmit, onCancel }: Props) {
   const {
+    control,
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ExpenseFormValues>({
@@ -74,7 +74,7 @@ export function ExpenseForm({ categories, initial, onSubmit, onCancel }: Props) 
     }
   }, [initial, reset]);
 
-  const isFixed = watch('isFixed');
+  const isFixed = useWatch({ control, name: 'isFixed' });
 
   return (
     <form

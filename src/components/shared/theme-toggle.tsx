@@ -27,7 +27,10 @@ export function ThemeToggle({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Two-pass render: SSR can't read localStorage so we mount with the default
+    // and reconcile to the saved theme on the client.
     const stored = (localStorage.getItem(THEME_KEY) as Theme | null) ?? 'dark';
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(stored);
     setMounted(true);
   }, []);

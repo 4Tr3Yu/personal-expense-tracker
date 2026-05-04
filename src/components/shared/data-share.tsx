@@ -14,6 +14,8 @@ export function DataShare({ data }: Props) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    // window.location is unavailable during SSR.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOrigin(window.location.origin);
   }, []);
 

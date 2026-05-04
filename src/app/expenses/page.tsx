@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { ExpenseForm, type ExpenseFormValues } from '@/components/expenses/expense-form';
@@ -13,15 +13,8 @@ function ExpensesContent() {
   const router = useRouter();
   const { data, isLoading, createExpense, editExpense, removeExpense } = useAppData();
 
-  const [formOpen, setFormOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(() => searchParams.get('action') === 'add');
   const [editing, setEditing] = useState<Expense | null>(null);
-
-  useEffect(() => {
-    if (searchParams.get('action') === 'add') {
-      setFormOpen(true);
-      setEditing(null);
-    }
-  }, [searchParams]);
 
   if (isLoading || !data) {
     return (

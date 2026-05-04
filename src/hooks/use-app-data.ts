@@ -22,8 +22,11 @@ export function useAppData() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loaded = loadAppData();
-    setData(loaded);
+    // Two-pass render: SSR has no localStorage so we mount with null/loading
+    // and reconcile on the client. Lazy initial state would cause a hydration
+    // mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setData(loadAppData());
     setIsLoading(false);
   }, []);
 

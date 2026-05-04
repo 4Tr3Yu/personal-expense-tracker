@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { IncomeForm, type IncomeFormValues } from '@/components/income/income-form';
@@ -13,15 +13,8 @@ function IncomeContent() {
   const router = useRouter();
   const { data, isLoading, createIncome, editIncome, removeIncome } = useAppData();
 
-  const [formOpen, setFormOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(() => searchParams.get('action') === 'add');
   const [editing, setEditing] = useState<Income | null>(null);
-
-  useEffect(() => {
-    if (searchParams.get('action') === 'add') {
-      setFormOpen(true);
-      setEditing(null);
-    }
-  }, [searchParams]);
 
   if (isLoading || !data) {
     return (
