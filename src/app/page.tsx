@@ -3,9 +3,16 @@
 import { Header } from '@/components/layout/header';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { useAppData } from '@/hooks/use-app-data';
-import { calculateMonthlyBalance, formatCurrency, getWeeklyBreakdown } from '@/lib/calculations';
+import {
+  calculateMonthlyBalance,
+  formatCurrency,
+  getExpensesForMonth,
+  getWeeklyBreakdown,
+} from '@/lib/calculations';
 import { ArrowDownIcon, ArrowUpIcon, WalletIcon, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import { MonthCalendar } from '@/components/dashboard/month-calendar';
+import { RecentTransactions } from '@/components/dashboard/recent-transactions';
 
 export default function Dashboard() {
   const { data, isLoading } = useAppData();
@@ -47,12 +54,14 @@ export default function Dashboard() {
     data.settings.weekStartsOn
   );
 
+  const monthExpenses = getExpensesForMonth(data.expenses, currentYear, currentMonth);
+
   const currency = data.settings.currency;
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1 container py-6 px-4">
+      <main className="flex-1 container py-6 px-4 pb-24">
         <div className="space-y-6">
           <div>
             <h1 className="h2">Dashboard</h1>
@@ -114,34 +123,75 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Weekly Breakdown */}
+          {/* Month Calendar */}
           <div className="card preset-filled-surface-100-900 p-4">
             <div className="pb-4">
-              <h2 className="h4">Weekly Breakdown</h2>
-              <p className="text-sm text-surface-600-400">Expenses by week this month</p>
-            </div>
-            {weeklyData.length === 0 ? (
-              <p className="text-surface-600-400 text-center py-8">
-                No expenses recorded this month yet
+              <h2 className="h4">{monthlyBalance.month} at a glance</h2>
+              <p className="text-sm text-surface-600-400">
+                Daily expense totals for the current month
               </p>
-            ) : (
-              <div className="space-y-3">
-                {weeklyData.map((week) => (
-                  <div key={week.weekNumber} className="flex items-center justify-between p-3 rounded-lg preset-tonal-surface">
-                    <div>
-                      <p className="font-medium">Week {week.weekNumber}</p>
-                      <p className="text-sm text-surface-600-400">
-                        {new Date(week.startDate).toLocaleDateString()} - {new Date(week.endDate).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-bold">{formatCurrency(week.totalExpenses, currency)}</p>
-                      <p className="text-sm text-surface-600-400">{week.expenses.length} transactions</p>
-                    </div>
-                  </div>
-                ))}
+            </div>
+            <MonthCalendar
+              expenses={monthExpenses}
+              year={currentYear}
+              month={currentMonth}
+              weekStartsOn={data.settings.weekStartsOn}
+              currency={currency}
+            />
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            {/* Weekly Breakdown */}
+            <div className="card preset-filled-surface-100-900 p-4">
+              <div className="pb-4">
+                <h2 className="h4">Weekly Breakdown</h2>
+                <p className="text-sm text-surface-600-400">Expenses by week this month</p>
               </div>
-            )}
+              {weeklyData.length === 0 ? (
+                <p className="text-surface-600-400 text-center py-8">
+                  No expenses recorded this month yet
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {weeklyData.map((week) => (
+                    <div
+                      key={week.weekNumber}
+                      className="flex items-center justify-between p-3 rounded-lg preset-tonal-surface"
+                    >
+                      <div>
+                        <p className="font-medium">Week {week.weekNumber}</p>
+                        <p className="text-sm text-surface-600-400">
+                          {new Date(week.startDate).toLocaleDateString()} -{' '}
+                          {new Date(week.endDate).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold">{formatCurrency(week.totalExpenses, currency)}</p>
+                        <p className="text-sm text-surface-600-400">
+                          {week.expenses.length} transactions
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Recent Transactions */}
+            <div className="card preset-filled-surface-100-900 p-4">
+              <div className="pb-4">
+                <h2 className="h4">Recent transactions</h2>
+                <p className="text-sm text-surface-600-400">
+                  Latest expenses and income
+                </p>
+              </div>
+              <RecentTransactions
+                expenses={data.expenses}
+                incomes={data.incomes}
+                categories={data.categories}
+                currency={currency}
+              />
+            </div>
           </div>
 
           {/* Get Started Card */}
