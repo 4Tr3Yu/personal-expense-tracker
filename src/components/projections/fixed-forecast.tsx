@@ -2,6 +2,7 @@
 
 import { TrendingUp } from 'lucide-react';
 import { calculateFixedExpensesForecast, formatCurrency } from '@/lib/calculations';
+import { StatTile } from '@/components/shared/stat-tile';
 import type { Expense } from '@/types';
 
 interface Props {
@@ -30,18 +31,15 @@ export function FixedForecast({ expenses, currency, monthsAhead = 6 }: Props) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="card preset-tonal-surface p-3">
-          <p className="text-xs text-surface-600-400">Monthly fixed</p>
-          <p className="text-xl font-bold">{formatCurrency(monthlyFixed, currency)}</p>
-        </div>
-        <div className="card preset-tonal-surface p-3">
-          <p className="text-xs text-surface-600-400">Next {monthsAhead} months</p>
-          <p className="text-xl font-bold">{formatCurrency(total, currency)}</p>
-        </div>
-        <div className="card preset-tonal-surface p-3">
-          <p className="text-xs text-surface-600-400">Annualized</p>
-          <p className="text-xl font-bold">{formatCurrency(monthlyFixed * 12, currency)}</p>
-        </div>
+        <StatTile label="Monthly fixed" value={formatCurrency(monthlyFixed, currency)} />
+        <StatTile
+          label={`Next ${monthsAhead} months`}
+          value={formatCurrency(total, currency)}
+        />
+        <StatTile
+          label="Annualized"
+          value={formatCurrency(monthlyFixed * 12, currency)}
+        />
       </div>
 
       <ul className="divide-y divide-surface-200-800">

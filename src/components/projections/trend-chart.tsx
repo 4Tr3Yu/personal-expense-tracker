@@ -7,6 +7,7 @@ import {
   formatCurrency,
   getMonthlyExpenseHistory,
 } from '@/lib/calculations';
+import { StatTile } from '@/components/shared/stat-tile';
 import type { Expense } from '@/types';
 
 interface Props {
@@ -73,24 +74,25 @@ export function TrendChart({ expenses, currency, months = 6 }: Props) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="card preset-tonal-surface p-3">
-          <p className="text-xs text-surface-600-400">Avg / month</p>
-          <p className="text-xl font-bold">{formatCurrency(trend.average, currency)}</p>
-        </div>
-        <div className="card preset-tonal-surface p-3">
-          <p className="text-xs text-surface-600-400">Trend</p>
-          <p className={cn('text-xl font-bold capitalize flex items-center gap-1', trendColor)}>
-            <TrendIcon className="h-5 w-5" />
-            {trend.trend}
-          </p>
-        </div>
-        <div className="card preset-tonal-surface p-3">
-          <p className="text-xs text-surface-600-400">vs. {months} months ago</p>
-          <p className={cn('text-xl font-bold', trendColor)}>
-            {trend.percentChange >= 0 ? '+' : ''}
-            {trend.percentChange.toFixed(1)}%
-          </p>
-        </div>
+        <StatTile label="Avg / month" value={formatCurrency(trend.average, currency)} />
+        <StatTile
+          label="Trend"
+          value={
+            <span className={cn('capitalize flex items-center gap-1', trendColor)}>
+              <TrendIcon className="h-5 w-5" />
+              {trend.trend}
+            </span>
+          }
+        />
+        <StatTile
+          label={`vs. ${months} months ago`}
+          value={
+            <span className={trendColor}>
+              {trend.percentChange >= 0 ? '+' : ''}
+              {trend.percentChange.toFixed(1)}%
+            </span>
+          }
+        />
       </div>
 
       <svg

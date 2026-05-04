@@ -11,6 +11,8 @@ import { ArrowDownIcon, ArrowUpIcon, WalletIcon, TrendingUp } from 'lucide-react
 import Link from 'next/link';
 import { MonthCalendar } from '@/components/dashboard/month-calendar';
 import { RecentTransactions } from '@/components/dashboard/recent-transactions';
+import { SectionCard } from '@/components/shared/section-card';
+import { SummaryCard } from '@/components/shared/summary-card';
 
 export default function Dashboard() {
   const { data, isLoading } = useAppData();
@@ -59,62 +61,41 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div className="card preset-filled-surface-100-900 p-4">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-sm font-medium">Total income</span>
-            <ArrowUpIcon className="h-4 w-4 text-success-500" />
-          </div>
-          <div className="text-2xl font-bold text-success-500">
-            {formatCurrency(monthlyBalance.totalIncome, currency)}
-          </div>
-          <p className="text-xs text-surface-600-400">This month</p>
-        </div>
-
-        <div className="card preset-filled-surface-100-900 p-4">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-sm font-medium">Total expenses</span>
-            <ArrowDownIcon className="h-4 w-4 text-error-500" />
-          </div>
-          <div className="text-2xl font-bold text-error-500">
-            {formatCurrency(monthlyBalance.totalExpenses, currency)}
-          </div>
-          <p className="text-xs text-surface-600-400">
-            Fixed: {formatCurrency(monthlyBalance.fixedExpenses, currency)}
-          </p>
-        </div>
-
-        <div className="card preset-filled-surface-100-900 p-4">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-sm font-medium">Balance</span>
-            <WalletIcon className="h-4 w-4 text-surface-600-400" />
-          </div>
-          <div
-            className={`text-2xl font-bold ${monthlyBalance.balance >= 0 ? 'text-success-500' : 'text-error-500'}`}
-          >
-            {formatCurrency(monthlyBalance.balance, currency)}
-          </div>
-          <p className="text-xs text-surface-600-400">Income − expenses</p>
-        </div>
-
-        <div className="card preset-filled-surface-100-900 p-4">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-sm font-medium">Fixed expenses</span>
-            <TrendingUp className="h-4 w-4 text-surface-600-400" />
-          </div>
-          <div className="text-2xl font-bold">
-            {formatCurrency(monthlyBalance.fixedExpenses, currency)}
-          </div>
-          <p className="text-xs text-surface-600-400">Recurring monthly</p>
-        </div>
+        <SummaryCard
+          label="Total income"
+          icon={ArrowUpIcon}
+          iconAccent="success"
+          accent="success"
+          value={formatCurrency(monthlyBalance.totalIncome, currency)}
+          sublabel="This month"
+        />
+        <SummaryCard
+          label="Total expenses"
+          icon={ArrowDownIcon}
+          iconAccent="error"
+          accent="error"
+          value={formatCurrency(monthlyBalance.totalExpenses, currency)}
+          sublabel={`Fixed: ${formatCurrency(monthlyBalance.fixedExpenses, currency)}`}
+        />
+        <SummaryCard
+          label="Balance"
+          icon={WalletIcon}
+          accent={monthlyBalance.balance >= 0 ? 'success' : 'error'}
+          value={formatCurrency(monthlyBalance.balance, currency)}
+          sublabel="Income − expenses"
+        />
+        <SummaryCard
+          label="Fixed expenses"
+          icon={TrendingUp}
+          value={formatCurrency(monthlyBalance.fixedExpenses, currency)}
+          sublabel="Recurring monthly"
+        />
       </div>
 
-      <div className="card preset-filled-surface-100-900 p-4">
-        <div className="pb-4">
-          <h2 className="h4">{monthlyBalance.month} at a glance</h2>
-          <p className="text-sm text-surface-600-400">
-            Daily expense totals for the current month
-          </p>
-        </div>
+      <SectionCard
+        title={`${monthlyBalance.month} at a glance`}
+        subtitle="Daily expense totals for the current month"
+      >
         <MonthCalendar
           expenses={monthExpenses}
           year={currentYear}
@@ -122,14 +103,10 @@ export default function Dashboard() {
           weekStartsOn={data.settings.weekStartsOn}
           currency={currency}
         />
-      </div>
+      </SectionCard>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="card preset-filled-surface-100-900 p-4">
-          <div className="pb-4">
-            <h2 className="h4">Weekly breakdown</h2>
-            <p className="text-sm text-surface-600-400">Expenses by week this month</p>
-          </div>
+        <SectionCard title="Weekly breakdown" subtitle="Expenses by week this month">
           {weeklyData.length === 0 ? (
             <p className="text-surface-600-400 text-center py-8">
               No expenses recorded this month yet
@@ -160,20 +137,16 @@ export default function Dashboard() {
               ))}
             </div>
           )}
-        </div>
+        </SectionCard>
 
-        <div className="card preset-filled-surface-100-900 p-4">
-          <div className="pb-4">
-            <h2 className="h4">Recent transactions</h2>
-            <p className="text-sm text-surface-600-400">Latest expenses and income</p>
-          </div>
+        <SectionCard title="Recent transactions" subtitle="Latest expenses and income">
           <RecentTransactions
             expenses={data.expenses}
             incomes={data.incomes}
             categories={data.categories}
             currency={currency}
           />
-        </div>
+        </SectionCard>
       </div>
 
       {data.expenses.length === 0 && data.incomes.length === 0 && (

@@ -2,6 +2,7 @@
 
 import { FixedForecast } from '@/components/projections/fixed-forecast';
 import { TrendChart } from '@/components/projections/trend-chart';
+import { SectionCard } from '@/components/shared/section-card';
 import { useAppData } from '@/hooks/use-app-data';
 
 export default function ProjectionsPage() {
@@ -28,25 +29,19 @@ export default function ProjectionsPage() {
         </p>
       </div>
 
-      <section className="card preset-filled-surface-100-900 p-4 space-y-4">
-        <div>
-          <h2 className="h4">Fixed expenses forecast</h2>
-          <p className="text-sm text-surface-600-400">
-            Recurring monthly expenses projected forward
-          </p>
-        </div>
+      <SectionCard
+        title="Fixed expenses forecast"
+        subtitle="Recurring monthly expenses projected forward"
+      >
         <FixedForecast expenses={data.expenses} currency={currency} />
-      </section>
+      </SectionCard>
 
-      <section className="card preset-filled-surface-100-900 p-4 space-y-4">
-        <div>
-          <h2 className="h4">Spending trend</h2>
-          <p className="text-sm text-surface-600-400">
-            Total expenses by month over the past 6 months
-          </p>
-        </div>
+      <SectionCard
+        title="Spending trend"
+        subtitle="Total expenses by month over the past 6 months"
+      >
         <TrendChart expenses={data.expenses} currency={currency} />
-      </section>
+      </SectionCard>
     </div>
   );
 }

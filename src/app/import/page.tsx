@@ -10,6 +10,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import { useAppData } from '@/hooks/use-app-data';
+import { StatTile } from '@/components/shared/stat-tile';
 import {
   decodeAppData,
   detectDataConflict,
@@ -119,18 +120,9 @@ function ImportContent() {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2 text-center">
-          <div className="card preset-tonal-surface p-3">
-            <p className="text-xs text-surface-600-400">Expenses</p>
-            <p className="text-xl font-bold">{incoming.expenses.length}</p>
-          </div>
-          <div className="card preset-tonal-surface p-3">
-            <p className="text-xs text-surface-600-400">Income</p>
-            <p className="text-xl font-bold">{incoming.incomes.length}</p>
-          </div>
-          <div className="card preset-tonal-surface p-3">
-            <p className="text-xs text-surface-600-400">Categories</p>
-            <p className="text-xl font-bold">{incoming.categories.length}</p>
-          </div>
+          <StatTile label="Expenses" value={incoming.expenses.length} />
+          <StatTile label="Income" value={incoming.incomes.length} />
+          <StatTile label="Categories" value={incoming.categories.length} />
         </div>
       </div>
 

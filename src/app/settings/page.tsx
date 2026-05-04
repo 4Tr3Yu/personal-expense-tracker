@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { DataShare } from '@/components/shared/data-share';
+import { SectionCard } from '@/components/shared/section-card';
 import { useAppData } from '@/hooks/use-app-data';
 
 export default function SettingsPage() {
@@ -25,27 +26,21 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      <section className="card preset-filled-surface-100-900 p-4 space-y-3">
-        <div>
-          <h2 className="h4">Share &amp; backup</h2>
-          <p className="text-sm text-surface-600-400">
-            Generate a link to import your data on another device
-          </p>
-        </div>
+      <SectionCard
+        title="Share & backup"
+        subtitle="Generate a link to import your data on another device"
+      >
         <DataShare data={data} />
-      </section>
+      </SectionCard>
 
-      <section className="card preset-filled-surface-100-900 p-4 space-y-3">
-        <div>
-          <h2 className="h4">Restore from a link</h2>
-          <p className="text-sm text-surface-600-400">
-            Open a shareable link to merge or replace your local data
-          </p>
-        </div>
+      <SectionCard
+        title="Restore from a link"
+        subtitle="Open a shareable link to merge or replace your local data"
+      >
         <Link href="/import" className="btn preset-tonal-surface">
           Open import page
         </Link>
-      </section>
+      </SectionCard>
     </div>
   );
 }
