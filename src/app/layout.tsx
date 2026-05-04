@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/layout/header";
+import { BottomNav } from "@/components/layout/bottom-nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,8 +58,10 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
-      <body className="min-h-full flex flex-col">
-        {children}
+      <body className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 container py-6 px-4 pb-24">{children}</main>
+        <BottomNav />
       </body>
     </html>
   );

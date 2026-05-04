@@ -9,8 +9,6 @@ import {
   ShieldAlert,
   XCircle,
 } from 'lucide-react';
-import { Header } from '@/components/layout/header';
-import { BottomNav } from '@/components/layout/bottom-nav';
 import { useAppData } from '@/hooks/use-app-data';
 import {
   decodeAppData,
@@ -205,29 +203,23 @@ function ImportContent() {
 
 export default function ImportPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1 container py-6 px-4 pb-24 max-w-2xl">
-        <div className="space-y-6">
-          <div>
-            <h1 className="h2">Import data</h1>
-            <p className="text-surface-600-400">
-              Review the incoming data before merging or replacing your local copy
-            </p>
+    <div className="max-w-2xl mx-auto space-y-6">
+      <div>
+        <h1 className="h2">Import data</h1>
+        <p className="text-surface-600-400">
+          Review the incoming data before merging or replacing your local copy
+        </p>
+      </div>
+      <Suspense
+        fallback={
+          <div className="animate-pulse space-y-3">
+            <div className="h-32 bg-surface-200-800 rounded-lg" />
+            <div className="h-48 bg-surface-200-800 rounded-lg" />
           </div>
-          <Suspense
-            fallback={
-              <div className="animate-pulse space-y-3">
-                <div className="h-32 bg-surface-200-800 rounded-lg" />
-                <div className="h-48 bg-surface-200-800 rounded-lg" />
-              </div>
-            }
-          >
-            <ImportContent />
-          </Suspense>
-        </div>
-      </main>
-      <BottomNav />
+        }
+      >
+        <ImportContent />
+      </Suspense>
     </div>
   );
 }

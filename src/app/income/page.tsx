@@ -3,8 +3,6 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
-import { Header } from '@/components/layout/header';
-import { BottomNav } from '@/components/layout/bottom-nav';
 import { IncomeForm, type IncomeFormValues } from '@/components/income/income-form';
 import { IncomeList } from '@/components/income/income-list';
 import { useAppData } from '@/hooks/use-app-data';
@@ -113,21 +111,15 @@ function IncomeContent() {
 
 export default function IncomePage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1 container py-6 px-4 pb-24">
-        <Suspense
-          fallback={
-            <div className="animate-pulse space-y-3">
-              <div className="h-8 w-40 bg-surface-200-800 rounded" />
-              <div className="h-24 bg-surface-200-800 rounded-lg" />
-            </div>
-          }
-        >
-          <IncomeContent />
-        </Suspense>
-      </main>
-      <BottomNav />
-    </div>
+    <Suspense
+      fallback={
+        <div className="animate-pulse space-y-3">
+          <div className="h-8 w-40 bg-surface-200-800 rounded" />
+          <div className="h-24 bg-surface-200-800 rounded-lg" />
+        </div>
+      }
+    >
+      <IncomeContent />
+    </Suspense>
   );
 }
