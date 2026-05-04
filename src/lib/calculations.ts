@@ -117,6 +117,29 @@ export function calculateFixedExpensesForecast(
   return forecast;
 }
 
+export function getMonthlyExpenseHistory(
+  expenses: Expense[],
+  months: number = 6
+): Array<{ year: number; month: number; label: string; total: number }> {
+  const today = new Date();
+  const history: Array<{ year: number; month: number; label: string; total: number }> = [];
+
+  for (let i = months - 1; i >= 0; i--) {
+    const target = addMonths(today, -i);
+    const year = target.getFullYear();
+    const month = target.getMonth();
+    const monthExpenses = getExpensesForMonth(expenses, year, month);
+    history.push({
+      year,
+      month,
+      label: format(target, 'MMM'),
+      total: monthExpenses.reduce((sum, e) => sum + e.amount, 0),
+    });
+  }
+
+  return history;
+}
+
 export function calculateSpendingTrend(
   expenses: Expense[],
   monthsToAnalyze: number = 3
