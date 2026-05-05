@@ -6,6 +6,7 @@ import { Plus } from 'lucide-react';
 import { ExpenseForm, type ExpenseFormValues } from '@/components/expenses/expense-form';
 import { ExpenseList } from '@/components/expenses/expense-list';
 import { useAppData } from '@/hooks/use-app-data';
+import { localDateISO } from '@/lib/calculations';
 import type { Expense } from '@/types';
 
 function ExpensesContent() {
@@ -39,7 +40,7 @@ function ExpensesContent() {
       amount: values.amount,
       description: values.description,
       categoryId: values.categoryId,
-      date: new Date(values.date).toISOString(),
+      date: localDateISO(values.date),
       isFixed: values.isFixed,
       recurrence: values.isFixed ? values.recurrence : undefined,
     };

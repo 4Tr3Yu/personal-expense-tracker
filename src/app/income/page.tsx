@@ -6,6 +6,7 @@ import { Plus } from 'lucide-react';
 import { IncomeForm, type IncomeFormValues } from '@/components/income/income-form';
 import { IncomeList } from '@/components/income/income-list';
 import { useAppData } from '@/hooks/use-app-data';
+import { localDateISO } from '@/lib/calculations';
 import type { Income } from '@/types';
 
 function IncomeContent() {
@@ -38,7 +39,7 @@ function IncomeContent() {
     const payload = {
       amount: values.amount,
       source: values.source,
-      date: new Date(values.date).toISOString(),
+      date: localDateISO(values.date),
       isRecurring: values.isRecurring,
       recurrence: values.isRecurring ? values.recurrence : undefined,
     };

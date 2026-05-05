@@ -9,6 +9,11 @@ import {
 } from 'date-fns';
 import { Expense, Income, MonthlyBalance, WeeklyBreakdown } from '@/types';
 
+export function localDateISO(ymd: string): string {
+  const [y, m, d] = ymd.split('-').map(Number);
+  return new Date(y, m - 1, d).toISOString();
+}
+
 export function getExpensesForMonth(expenses: Expense[], year: number, month: number): Expense[] {
   const date = new Date(year, month);
   const start = startOfMonth(date);
