@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { DataShare } from '@/components/shared/data-share';
 import { SectionCard } from '@/components/shared/section-card';
+import { CurrencyPicker } from '@/components/settings/currency-picker';
 import { useAppData } from '@/hooks/use-app-data';
 
 export default function SettingsPage() {
-  const { data, isLoading } = useAppData();
+  const { data, isLoading, changeSettings } = useAppData();
 
   if (isLoading || !data) {
     return (
@@ -25,6 +26,16 @@ export default function SettingsPage() {
           Back up, share, or restore your data
         </p>
       </div>
+
+      <SectionCard
+        title="Currency"
+        subtitle="Used to format every amount across the app"
+      >
+        <CurrencyPicker
+          value={data.settings.currency}
+          onChange={(currency) => changeSettings({ currency })}
+        />
+      </SectionCard>
 
       <SectionCard
         title="Share & backup"

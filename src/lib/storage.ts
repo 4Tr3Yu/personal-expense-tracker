@@ -18,7 +18,7 @@ export const DEFAULT_CATEGORIES: Category[] = [
 ];
 
 export const DEFAULT_SETTINGS: UserSettings = {
-  currency: 'USD',
+  currency: 'CLP',
   theme: 'dark',
   weekStartsOn: 0,
   defaultCategories: DEFAULT_CATEGORIES.map(c => c.id),

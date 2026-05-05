@@ -183,8 +183,14 @@ export function calculateSpendingTrend(
   return { average, trend, percentChange };
 }
 
-export function formatCurrency(amount: number, currency: string = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
+const CURRENCY_LOCALE: Record<string, string> = {
+  CLP: 'es-CL',
+  USD: 'en-US',
+};
+
+export function formatCurrency(amount: number, currency: string = 'CLP'): string {
+  const locale = CURRENCY_LOCALE[currency] ?? 'en-US';
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
   }).format(amount);
